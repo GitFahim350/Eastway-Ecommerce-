@@ -1,71 +1,69 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './Navbar'
-import { popularProducts } from './data'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import { useState} from 'react'
-import { addToDatabaseCart } from '../utilities/databaseManager';
+import { useState } from 'react'
+import axios from 'axios'
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../redux/cartRedux'
 
-      
 
-    const Container = styled.div``;
-
-    const Wrapper = styled.div`
+const Wrapper = styled.div`
       padding: 50px;
       display: flex;
       flex-wrap: wrap;
     `;
 
-    const ImgContainer = styled.div`
+const ImgContainer = styled.div`
       flex: 1;
     `;
 
-    const Image = styled.img`
+const Image = styled.img`
       width: 100%;
       height: 90vh;
       object-fit: cover;
       
     `;
 
-    const InfoContainer = styled.div`
+const InfoContainer = styled.div`
       flex: 1;
       padding: 0px 50px;
      
     `;
 
-    const Title = styled.h1`
+const Title = styled.h1`
       font-weight: 200;
     `;
 
-    const Desc = styled.p`
+const Desc = styled.p`
       margin: 20px 0px;
     `;
 
-    const Price = styled.span`
+const Price = styled.span`
       font-weight: 100;
       font-size: 40px;
     `;
 
-    const FilterContainer = styled.div`
+const FilterContainer = styled.div`
       width: 50%;
       margin: 30px 0px;
       display: flex;
       justify-content: space-between;
     `;
 
-    const Filter = styled.div`
+const Filter = styled.div`
       display: flex;
       align-items: center;
     `;
 
-    const FilterTitle = styled.span`
+const FilterTitle = styled.span`
       font-size: 20px;
       font-weight: 200;
     `;
 
-    const FilterColor = styled.div`
+const FilterColor = styled.div`
       width: 20px;
       height: 20px;
       border-radius: 50%;
@@ -74,14 +72,14 @@ import { addToDatabaseCart } from '../utilities/databaseManager';
       cursor: pointer;
     `;
 
-    const FilterSize = styled.select`
+const FilterSize = styled.select`
       margin-left: 10px;
       padding: 5px;
     `;
 
-    const FilterSizeOption = styled.option``;
+const FilterSizeOption = styled.option``;
 
-    const AddContainer = styled.div`
+const AddContainer = styled.div`
       width: 50%;
       display: flex;
       align-items: center;
@@ -89,13 +87,13 @@ import { addToDatabaseCart } from '../utilities/databaseManager';
       
     `;
 
-    const AmountContainer = styled.div`
+const AmountContainer = styled.div`
       display: flex;
       align-items: center;
       font-weight: 700;
     `;
 
-    const Amount = styled.span`
+const Amount = styled.span`
       width: 30px;
       height: 30px;
       border-radius: 10px;
@@ -106,7 +104,7 @@ import { addToDatabaseCart } from '../utilities/databaseManager';
       margin: 0px 5px;
     `;
 
-    const Button = styled.button`
+const Button = styled.button`
       padding: 15px;
       border: 2px solid teal;
       background-color: white;
@@ -118,104 +116,91 @@ import { addToDatabaseCart } from '../utilities/databaseManager';
       }
     `;
 
+
+
 const Individual = () => {
 
-    const prodid = useParams();
+  const location = useLocation();
+  const prodid = location.pathname.split("/")[2];
+  const [Product, setProduct] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const dispatch=useDispatch();
+  
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/api/product/find/" + prodid)
+        
+        setProduct(res.data)
+      }
+      catch (err) {
+        console.log(err)
+      }
+    };
+    getProduct();
+  }, [prodid]);
 
-      const prod = popularProducts.find((item) =>
-          item.id == prodid.id
-      )
-    
-    const [quantity, setquantity] = useState(0);
+ 
+  
 
-    const [cart,SetCart]=useState([]);
-
-    
-    // useEffect(() => {
-
-    //   const obj = getDatabaseCart();
-    //   const productkeys = Object.keys(obj);
-    //   if (popularProducts.length) {
-    //       const prod = productkeys.map(key => {
-    //           const product = popularProducts.find(item => item.id === key);
-    //           product.quantity = obj[key];
-    //           return product;
-    //       });
-    //       SetCart(prod);
-    //   }
-    //   }, [])
-
-    const carthandle = (props) => {
-        const toBeAddedKey = props.id;
-        const sameProduct = cart.find(item => item.id === toBeAddedKey);
-
-        let count = 1;
-        let newcart;
-        if (sameProduct) {
-            count = sameProduct.quantity + 1;
-            sameProduct.quantity = sameProduct.quantity + 1;
-            const others = cart.filter(pd => pd.key !== toBeAddedKey);
-            newcart = [...others, sameProduct];
-        }
-        else {
-            props.quantity = quantity;
-            newcart = [...cart, props];
-        }
-        SetCart(newcart);
-        addToDatabaseCart(props.id, count);
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
     }
-    return (
+  };
 
-        <div>
-          {
-            console.log(cart)
-          }
-            <Navbar></Navbar>
-            <Wrapper>
-                <ImgContainer>
-                    <Image src={prod.img} />
-                </ImgContainer>
-                <InfoContainer>
-                    <Title>Denim Jumpsuit</Title>
-                    <Desc>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                        venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-                        iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-                        tristique tortor pretium ut. Curabitur elit justo, consequat id
-                        condimentum ac, volutpat ornare.
-                    </Desc>
-                    <Price>$ 20</Price>
-                    <FilterContainer>
-                        <Filter>
-                            <FilterTitle>Color</FilterTitle>
-                            <FilterColor color="black" />
-                            <FilterColor color="darkblue" />
-                            <FilterColor color="gray" />
-                        </Filter>
-                        <Filter>
-                            <FilterTitle>Size</FilterTitle>
-                            <FilterSize>
-                                <FilterSizeOption>XS</FilterSizeOption>
-                                <FilterSizeOption>S</FilterSizeOption>
-                                <FilterSizeOption>M</FilterSizeOption>
-                                <FilterSizeOption>L</FilterSizeOption>
-                                <FilterSizeOption>XL</FilterSizeOption>
-                            </FilterSize>
-                        </Filter>
-                    </FilterContainer>
-                    <AddContainer>
-                        <AmountContainer>
-                            <RemoveIcon onClick={()=>{quantity!==0&&setquantity(quantity-1)}}/>
-                            <Amount>{quantity}</Amount>
-                            <AddIcon onClick={()=>{setquantity(quantity+1)}}/>
-                        </AmountContainer>
-                        <Button onClick={()=>carthandle(prod)}>ADD TO CART</Button>
-                    </AddContainer>
-                </InfoContainer>
-            </Wrapper>
+  const handleClick = () => {
+    dispatch(
+      addProduct({ ...Product,quantity,color,size})
+    );
+  };
 
-        </div>
-    )
+  return (
+    <div>
+      <Navbar></Navbar>
+      <Wrapper>
+        <ImgContainer>
+          <Image src={Product.img} />
+        </ImgContainer>
+        <InfoContainer>
+          <Title>{Product.title}</Title>
+          <Desc>
+            {Product.desc}
+          </Desc>
+          <Price>${Product.price}</Price>
+          <FilterContainer>
+            <Filter>
+              <FilterTitle>Color</FilterTitle>
+              {
+                Product.color && Product.color.map((c) => <FilterColor color={c} onClick={()=>setColor(c)}></FilterColor>)
+              }
+            </Filter>
+            <Filter>
+              <FilterTitle>Size</FilterTitle>
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
+                {
+                  Product.size && Product.size.map((c) => <FilterSizeOption>{c}</FilterSizeOption>)
+                }
+              </FilterSize>
+            </Filter>
+          </FilterContainer>
+          <AddContainer>
+            <AmountContainer>
+              <RemoveIcon onClick={() => handleQuantity("dec")} />
+              <Amount>{quantity}</Amount>
+              <AddIcon onClick={() => handleQuantity("inc")} />
+            </AmountContainer>
+            <Button onClick={()=>handleClick()}>ADD TO CART</Button>
+          </AddContainer>
+        </InfoContainer>
+      </Wrapper>
+
+    </div>
+  )
 }
 
 export default Individual

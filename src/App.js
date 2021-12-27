@@ -14,10 +14,9 @@ import Individual from './components/Individual';
 import ProductList from './components/ProductList';
 
 function App() {
-  const user = true;
+  const user = false;
   return (
     <div className="App">
-
       <Router>
         <Switch>
           <Route exact path="/">
@@ -25,7 +24,6 @@ function App() {
           </Route>
           <Route exact path="/products/:category">
             <ProductList></ProductList>
-
           </Route>
           <Route path="/product/:id">
             <Individual></Individual>
@@ -41,7 +39,6 @@ function App() {
           </Route>
         </Switch>
       </Router>
-
     </div>
   );
 }

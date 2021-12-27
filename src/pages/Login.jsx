@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components'
 import Navbar from '../components/Navbar';
+import { login } from '../redux/apiCalls';
 const Container = styled.div`
     display: flex;
     justify-content: center;
@@ -22,6 +24,21 @@ const Card = styled.div`
 `;
 
 const Login = () => {
+    const [email,setEmail]=useState("");
+    const [username,setUsername]=useState("");
+    const [password,setPassword]=useState("");
+    const [user,setUser]=useState({});
+    const dispatch=useDispatch();
+    const handleClick=(e)=>{
+        e.preventDefault();
+        setUser({
+            "email":email,
+            "password":password
+        })
+        
+        login(dispatch,user);
+        //login(dispatch,{email,password});
+    }
     return (
         <div>
             <Navbar></Navbar>
@@ -30,9 +47,10 @@ const Login = () => {
                 <Card>
                     <h1>Login</h1>
                     <br /><br />
-                    <input className='w-75' style={{ background: 'none', border: 'none' }} type="text" name='username' placeholder='Enter Username' /><br />
-                    <input className='w-75' style={{ background: 'none', border: 'none' }} type="password" name='password' placeholder='Enter Password' /><br />
-                    <button style={{ backgroundColor: '#1E7D00', color: 'white' }}>Login</button>
+                    {/* <input className='w-75' style={{ background: 'none', border: 'none' }} type="text" name='username' placeholder='Enter Username' onChange={(e)=>setUsername(e.target.value)} /><br /> */}
+                    <input className='w-75' style={{ background: 'none', border: 'none' }} type="text" name='username' placeholder='Enter Email address' onChange={(e)=>setEmail(e.target.value)} /><br />
+                    <input className='w-75' style={{ background: 'none', border: 'none' }} type="password" name='password' placeholder='Enter Password' onChange={(e)=>setPassword(e.target.value)} /><br />
+                    <button style={{ backgroundColor: '#1E7D00', color: 'white' }} onClick={handleClick}>Login</button>
 
                 </Card>
             </Container>

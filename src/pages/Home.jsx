@@ -11,7 +11,7 @@ const Home = () => {
             <Navbar></Navbar>
             <Slicker></Slicker>
             <CategoryList></CategoryList>
-            <Products></Products>
+            <Products ></Products> 
             <Footer></Footer>
         </>
 

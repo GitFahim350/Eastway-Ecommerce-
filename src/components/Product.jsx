@@ -1,11 +1,8 @@
 import styled from 'styled-components';
-import React, { useState } from 'react'
 import { Grid } from '@mui/material';
-import { positions } from '@mui/system';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { IconButton } from '@mui/material';
+
 import { Link } from 'react-router-dom';
 const Item = styled.div`
     width: 100%;
@@ -31,13 +28,9 @@ const Info = styled.div`
 `;
 
 const Product = ({ item }) => {
-    
     return (
-
-        //<Link to={`/product/${item.id}`} >
-
         <Grid item xs={6} md={3} >
-            <Link to={`/product/${item.id}`} >
+            <Link to={`/product/${item._id}`} >
                 <Item>
                     <Image src={item.img} alt="" />
                     <Info >
@@ -47,12 +40,6 @@ const Product = ({ item }) => {
                 </Item>
             </Link >
         </Grid>
-
-        
-
-
-
-
     )
 }
 export default Product

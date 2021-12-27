@@ -26,12 +26,10 @@ const InfoContainer = styled.div`
 const Paragraph = styled.p`
     letter-spacing: 3px;
 `;
-const Carousel=styled.div`
-    background-color: #E0FFFF;
-`;
+
 const Slicker = () => {
     return (
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleControls" className="carousel slide w-100" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active" style={{width:'100%',height:'100%' }}>
 

@@ -42,13 +42,17 @@ const ProductList = () => {
             <Navbar></Navbar>
             <FilterItem>
                 <Filter>
+                    
+                    <p style={{fontSize:'20px',margin:'20px'}}>{cat.category}</p>
+                    
                     <span style={{fontSize:'20px',margin:'20px'}}>Filter Products</span>
                     <Select name='color' onChange={handleFilters}>
                         <option value="" disabled selected>Color</option>
-                        <option value="White">White</option>
-                        <option value="Red">Red</option>
-                        <option value="Green">Green</option>
-                        <option value="Blue">Blue</option>
+                        <option value="white">White</option>
+                        <option value="red">Red</option>
+                        <option value="green">Green</option>
+                        <option value="blue">Blue</option>
+                        <option value="yellow">Yellow</option>
                     </Select>
 
                     <Select name='size' onChange={handleFilters}>
@@ -67,12 +71,9 @@ const ProductList = () => {
                         <option value="asc">Price(asc)</option>
                         <option value="dsc">Price(dsc)</option>
                     </Select>
-
-                    
-
                 </Filter>
             </FilterItem>
-            <Products></Products>
+            <Products cat={cat} filters={filter} sort={sort}></Products>
 
             <Footer></Footer>
 

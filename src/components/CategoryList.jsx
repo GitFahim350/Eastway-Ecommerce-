@@ -5,10 +5,8 @@ import { categories } from './data';
 
 const CategoryList = () => {
     return (
-        <div style={{display:'flex',flexWrap:'wrap',justifyContent:'space-between'}}>
-            
+        <div style={{display:'flex',flexWrap:'wrap',justifyContent:'space-between',width:'100%'}}>
             {
-                
                 categories.map((item)=>
                     <Category key={item.id} item={item}></Category> 
                 )
