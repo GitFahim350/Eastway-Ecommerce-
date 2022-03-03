@@ -122,7 +122,7 @@ const Individual = () => {
 
   const location = useLocation();
   const prodid = location.pathname.split("/")[2];
-  const [Product, setProduct] = useState([]);
+  const [Product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
@@ -143,7 +143,7 @@ const Individual = () => {
   }, [prodid]);
 
  
-  
+  console.log("Product is",Product)
 
   const handleQuantity = (type) => {
     if (type === "dec") {

@@ -12,9 +12,10 @@ import {
 } from "react-router-dom";
 import Individual from './components/Individual';
 import ProductList from './components/ProductList';
+import { useSelector } from 'react-redux';
 
 function App() {
-  const user = false;
+  const user = useSelector((state)=>state.user.currentUser)
   return (
     <div className="App">
       <Router>

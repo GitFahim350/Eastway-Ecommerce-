@@ -1,61 +1,120 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 import Navbar from '../components/Navbar';
 import { login } from '../redux/apiCalls';
+import axios from "axios";
+
+import { loginFailure, loginStart, loginSuccess } from "../redux/userRedux";
 const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)) ,url('https://lh6.googleusercontent.com/ODD-NCqz20Ah0E9VrJavrAAGPjkHnuadypdwX1E9zSMVNnoTQmeVKHYrMnYUFneNyb17NihDCLthhZGKLqOfrosF389UNmUoB0lil0MlQJ7CwYM-PtpLGj6cZ9EfDf3psNG2tReI');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+      center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
-const Card = styled.div`
-    width: 20vw;
-    height: 50vh;
-    background-color: #d8d8d8;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+
+const Wrapper = styled.div`
+  width: 25%;
+  padding: 20px;
+  background-color: white;
+  
+`;
+
+const Title = styled.h1`
+  font-size: 24px;
+  font-weight: 300;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Input = styled.input`
+  flex: 1;
+  min-width: 40%;
+  margin: 10px 0;
+  padding: 10px;
+`;
+
+const Button = styled.button`
+  width: 40%;
+  border: none;
+  padding: 15px 20px;
+  background-color: teal;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
+`;
+
+const Link = styled.a`
+  margin: 5px 0px;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
+const Error = styled.span`
+  color: red;
 `;
 
 const Login = () => {
-    const [email,setEmail]=useState("");
-    const [username,setUsername]=useState("");
-    const [password,setPassword]=useState("");
-    const [user,setUser]=useState({});
-    const dispatch=useDispatch();
-    const handleClick=(e)=>{
-        e.preventDefault();
-        setUser({
-            "email":email,
-            "password":password
-        })
-        
-        login(dispatch,user);
-        //login(dispatch,{email,password});
-    }
-    return (
-        <div>
-            <Navbar></Navbar>
-            <Container>
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const { isFetching, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const handleClick = async(e) => {
+  e.preventDefault();
 
-                <Card>
-                    <h1>Login</h1>
-                    <br /><br />
-                    {/* <input className='w-75' style={{ background: 'none', border: 'none' }} type="text" name='username' placeholder='Enter Username' onChange={(e)=>setUsername(e.target.value)} /><br /> */}
-                    <input className='w-75' style={{ background: 'none', border: 'none' }} type="text" name='username' placeholder='Enter Email address' onChange={(e)=>setEmail(e.target.value)} /><br />
-                    <input className='w-75' style={{ background: 'none', border: 'none' }} type="password" name='password' placeholder='Enter Password' onChange={(e)=>setPassword(e.target.value)} /><br />
-                    <button style={{ backgroundColor: '#1E7D00', color: 'white' }} onClick={handleClick}>Login</button>
+  dispatch(loginStart());
+  try {
+    const res = await axios.post("http://localhost:8000/api/user/login",{email,password});
+    console.log("Username",res.data)
+    
+    res&&dispatch(loginSuccess(res.data));
+  } catch (err) {
+    console.log("Error is",err)
+    dispatch(loginFailure());
+  }
+  };
+  return (
+    <Container>
 
-                </Card>
-            </Container>
-        </div>
-    )
-}
+      <Wrapper>
+        <Title>SIGN IN</Title>
+        <Form>
+          <Input
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            placeholder="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button onClick={()=>handleClick()} disabled={isFetching}>
+            LOGIN
+          </Button>
+          {error && <Error>Something went wrong...</Error>}
+          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+          <Link>CREATE A NEW ACCOUNT</Link>
+        </Form>
+      </Wrapper>
+    </Container>
+  );
+};
 
 export default Login

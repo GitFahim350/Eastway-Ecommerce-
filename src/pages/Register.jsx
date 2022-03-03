@@ -1,5 +1,6 @@
 
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Navbar from '../components/Navbar';
 const Container = styled.div`
@@ -22,7 +23,20 @@ const Card = styled.div`
     flex-direction: column;
 `;
 
+
+
 const Register = () => {
+    const[username,setUsername]=useState("")
+    const[email,setEmail]=useState("")
+    const[password,setPassword]=useState("")
+    const handleregister=async()=>{
+        try {
+            await axios.post("http://localhost:8000/api/user/register",{username,email,password})
+            window.location.replace("/")
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <div>
             <Navbar></Navbar>
@@ -31,10 +45,22 @@ const Register = () => {
                 <Card>
                     <h1>Register</h1>
                     <br /><br />
-                    <input className='w-75' style={{ background: 'none', border: 'none' }} type="text" name='username' placeholder='Enter Username' /><br />
-                    <input className='w-75' style={{ background: 'none', border: 'none' }} type="password" name='password' placeholder='Enter Password' /><br />
-                    <input className='w-75' style={{ background: 'none', border: 'none' }} type="password" name='repassword' placeholder='Enter Password again' /><br />
-                    <button style={{ backgroundColor: '#1E7D00', color: 'white' }}>Register here</button>
+
+                    <input className='w-75' onChange={(e)=>{
+                        setUsername(e.target.value)
+                    }} style={{ background: 'none', border: 'none' }} type="text" name='username' placeholder='Enter Username' /><br />
+
+
+                    <input className='w-75' onChange={(e)=>{
+                        setEmail(e.target.value)
+                    }} style={{ background: 'none', border: 'none' }} type="email" name='email' placeholder='Enter Email' /><br />
+                    <input className='w-75'onChange={(e)=>{
+                        setPassword(e.target.value)
+                    }} style={{ background: 'none', border: 'none' }} type="password" name='password' placeholder='Enter Password' /><br />
+                    {/* <input className='w-75' style={{ background: 'none', border: 'none' }} type="password" name='repassword' placeholder='Enter Password again' /><br /> */}
+                    <button style={{ backgroundColor: '#1E7D00', color: 'white' }} onClick={()=>{
+                        handleregister()
+                    }}>Register here</button>
 
                 </Card>
             </Container>
