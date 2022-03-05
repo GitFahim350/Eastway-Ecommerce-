@@ -10,8 +10,10 @@ import { Link } from "react-router-dom";
 import { logout } from '../redux/userRedux';
 
 const Container = styled.div`
-  height: 60px;
-  ${mobile({ height: "50px" })}
+  
+  
+  font-family: 'Space Mono', monospace;
+  
 `;
 
 const Wrapper = styled.div`
@@ -20,19 +22,22 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  ${mobile({ padding: "10px 0px" })}
+  
 `;
 
 const Left = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+  
 `;
 
 const Language = styled.span`
-  font-size: 14px;
+  font-size: 20px;
   cursor: pointer;
-  ${mobile({ display: "none" })}
+  text-decoration: none;
+  
+  
 `;
 
 const SearchContainer = styled.div`
@@ -55,7 +60,7 @@ const Center = styled.div`
 
 const Logo = styled.h1`
   font-weight: bold;
-  ${mobile({ fontSize: "24px" })}
+  
 `;
 const Right = styled.div`
   flex: 1;
@@ -66,22 +71,23 @@ const Right = styled.div`
 `;
 
 const MenuItem = styled.div`
-  font-size: 14px;
+  font-size: 20px;
   cursor: pointer;
   margin-left: 25px;
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+  color: #727272;
+  
 `;
 
 const Navbar = () => {
-  const quantity = useSelector(state=>state.cart.quantity)
- 
-  const user = useSelector((state)=>state.user.currentUser)
-  const dispatch=useDispatch();
+  const quantity = useSelector(state => state.cart.quantity)
+  const user = useSelector((state) => state.user.currentUser)
+  const dispatch = useDispatch();
   return (
     <Container>
       <Wrapper>
         <Left>
-          <Link to='/'><Language>EN</Language></Link>
+          
+          <Link style={{textDecoration:"none"}} to="/"><MenuItem>EN</MenuItem></Link>
           <SearchContainer>
             <Input placeholder="Search" />
             <SearchIcon style={{ color: "gray", fontSize: 16 }} />
@@ -89,20 +95,20 @@ const Navbar = () => {
         </Left>
         <Center>
           <Logo>EASTWAY.</Logo>
-          
+
         </Center>
         <Right>
-        {!user&&<Link to="/register"><MenuItem>REGISTER</MenuItem></Link>}
-        
-        {!user?<Link to="/login"><MenuItem>SIGN IN</MenuItem></Link>:<p onClick={()=>{
-          dispatch(logout())
-        }}>Logout</p>}
+          {!user && <Link style={{textDecoration:"none"}} to="/register"><MenuItem>REGISTER</MenuItem></Link>}
+
+          {!user ? <Link style={{textDecoration:"none"}} to="/login" ><MenuItem>SIGN IN</MenuItem></Link> : <MenuItem onClick={() => {
+            dispatch(logout())
+          }}>Logout</MenuItem>}
           <Link to="/cart">
-          <MenuItem>
-            <Badge badgeContent={quantity} color="primary">
-              <ShoppingCartOutlinedIcon />
-            </Badge>
-          </MenuItem>
+            <MenuItem>
+              <Badge badgeContent={quantity} color="primary">
+                <ShoppingCartOutlinedIcon />
+              </Badge>
+            </MenuItem>
           </Link>
         </Right>
       </Wrapper>

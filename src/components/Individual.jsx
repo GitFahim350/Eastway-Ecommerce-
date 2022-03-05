@@ -6,7 +6,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from 'react'
 import axios from 'axios'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../redux/cartRedux'
 
 
@@ -127,7 +127,7 @@ const Individual = () => {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const dispatch=useDispatch();
-  
+  const cart = useSelector(state=>state.cart)
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -144,6 +144,7 @@ const Individual = () => {
 
  
   console.log("Product is",Product)
+  console.log("Cart is",cart)
 
   const handleQuantity = (type) => {
     if (type === "dec") {
@@ -157,6 +158,8 @@ const Individual = () => {
     dispatch(
       addProduct({ ...Product,quantity,color,size})
     );
+
+
   };
 
   return (

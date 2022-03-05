@@ -55,8 +55,6 @@ const Products = ({ cat, filters, sort }) => {
                 }
             </Grid>
         </Container>
-
-
     )
 }
 

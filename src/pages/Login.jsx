@@ -73,22 +73,22 @@ const Error = styled.span`
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const { isFetching, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const handleClick = async(e) => {
-  e.preventDefault();
+  const handleClick = async (e) => {
+    e.preventDefault();
 
-  dispatch(loginStart());
-  try {
-    const res = await axios.post("http://localhost:8000/api/user/login",{email,password});
-    console.log("Username",res.data)
-    
-    res&&dispatch(loginSuccess(res.data));
-  } catch (err) {
-    console.log("Error is",err)
-    dispatch(loginFailure());
-  }
+    dispatch(loginStart());
+    try {
+      const res = await axios.post("http://localhost:8000/api/user/login", { email, password });
+      console.log("Username", res.data)
+
+      res && dispatch(loginSuccess(res.data));
+    } catch (err) {
+      console.log("Error is", err)
+      dispatch(loginFailure());
+    }
   };
   return (
     <Container>
@@ -105,7 +105,7 @@ const Login = () => {
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button onClick={()=>handleClick()} disabled={isFetching}>
+          <Button onClick={() => handleClick()} disabled={isFetching}>
             LOGIN
           </Button>
           {error && <Error>Something went wrong...</Error>}
