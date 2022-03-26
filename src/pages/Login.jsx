@@ -77,7 +77,13 @@ const Login = () => {
   const { isFetching, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const handleClick = async (e) => {
-    e.preventDefault();
+
+    
+    e.preventDefault()
+    console.log(email)
+    console.log(password)
+
+
 
     dispatch(loginStart());
     try {
@@ -89,6 +95,8 @@ const Login = () => {
       console.log("Error is", err)
       dispatch(loginFailure());
     }
+
+
   };
   return (
     <Container>
@@ -105,7 +113,7 @@ const Login = () => {
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button onClick={() => handleClick()} disabled={isFetching}>
+          <Button onClick={handleClick} >
             LOGIN
           </Button>
           {error && <Error>Something went wrong...</Error>}

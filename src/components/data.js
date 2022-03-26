@@ -25,19 +25,19 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      img: "https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hpcnR8ZW58MHx8MHx8&w=1000&q=80",
       title: "SHIRT STYLE!",
       cat:"shirt"
     },
     {
       id: 2,
-      img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "LOUNGEWEAR LOVE",
+      img: "https://cdna.lystit.com/photos/ralphlauren/cf525f1a/polo-ralph-lauren-Dark-Heather-Brown-Wool-blend-Wrap-Coat.jpeg",
+      title: "Coat",
       cat:"coat"
     },
     {
       id: 3,
-      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      img: "https://i.pinimg.com/originals/31/1e/2b/311e2b48a008ab2769804ec182970d95.jpg",
       title: "LIGHT JACKETS",
       cat:"jacket"
     },

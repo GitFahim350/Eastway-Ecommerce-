@@ -123,7 +123,7 @@ const Individual = () => {
   const location = useLocation();
   const prodid = location.pathname.split("/")[2];
   const [Product, setProduct] = useState({});
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const dispatch=useDispatch();
@@ -158,7 +158,6 @@ const Individual = () => {
     dispatch(
       addProduct({ ...Product,quantity,color,size})
     );
-
 
   };
 

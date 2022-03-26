@@ -32,6 +32,19 @@ const Left = styled.div`
   
 `;
 
+const Center = styled.div`
+  flex: 1;
+  text-align: center;
+`;
+
+const Right = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  ${mobile({ flex: 2, justifyContent: "center" })}
+`;
+
 const Language = styled.span`
   font-size: 20px;
   cursor: pointer;
@@ -53,22 +66,13 @@ const Input = styled.input`
   ${mobile({ width: "50px" })}
 `;
 
-const Center = styled.div`
-  flex: 1;
-  text-align: center;
-`;
+
 
 const Logo = styled.h1`
   font-weight: bold;
   
 `;
-const Right = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  ${mobile({ flex: 2, justifyContent: "center" })}
-`;
+
 
 const MenuItem = styled.div`
   font-size: 20px;

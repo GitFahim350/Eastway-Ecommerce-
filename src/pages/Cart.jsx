@@ -81,17 +81,20 @@ const Cart = () => {
 
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <p className='display-7'><strong>Estimated shiping</strong></p>
-                        <p className='display-7'>$5.5</p>
+                        {cart.total!==0&&<p className='display-7'>$5.5</p>}
+                        {cart.total===0&&<p className='display-7'>$0.0</p>}
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <p className='display-7'><strong>Shiping Discount</strong></p>
-                        <p className='display-7'>$5.0</p>
+                        {cart.total!==0&&<p className='display-7'>$5.0</p>}
+                        {cart.total===0&&<p className='display-7'>$0.0</p>}
                     </div>
                     <hr />
                     <div className='mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <p style={{ fontWeight: 'bold', fontSize: '2rem' }}>Total</p>
-                        <p style={{ fontWeight: 'bold', fontSize: '2rem' }}>${cart.total}</p>
+                        {cart.total!==0&&<p style={{ fontWeight: 'bold', fontSize: '2rem' }}>${cart.total+0.5}</p>}
+                        {cart.total===0&&<p style={{ fontWeight: 'bold', fontSize: '2rem' }}>${cart.total}</p>}
                     </div>
 
                     <Button>Order Now</Button>

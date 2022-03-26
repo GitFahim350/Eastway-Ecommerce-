@@ -124,13 +124,13 @@ const Footer = () => {
       <Right>
         <Title>Contact</Title>
         <ContactItem>
-          <RoomIcon style={{marginRight:"10px"}}/> 622 Dixie Path , South Tobinchester 98336
+          <RoomIcon style={{marginRight:"10px"}}/> 622 Dhaka , Bangladesh 12001
         </ContactItem>
         <ContactItem>
           <PhoneIcon style={{marginRight:"10px"}}/> +1 234 56 78
         </ContactItem>
         <ContactItem>
-          <MailIcon style={{marginRight:"10px"}} /> contact@lama.dev
+          <MailIcon style={{marginRight:"10px"}} /> contact@fahimaust.com
         </ContactItem>
         <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
       </Right>
